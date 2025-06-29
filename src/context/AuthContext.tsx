@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import axios from 'axios'
 
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+
 interface User {
   id?: string
   _id?: string
@@ -58,7 +60,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const checkAuth = async () => {
       if (token) {
         try {
-          const response = await axios.get('http://localhost:3001/api/auth/profile')
+          const response = await axios.get(`${API_BASE}/api/auth/profile`)
           setUser(response.data)
         } catch (error) {
           localStorage.removeItem('token')
@@ -76,7 +78,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setError(null)
     
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/login', {
+      const response = await axios.post(`${API_BASE}/api/auth/login`, {
         email,
         password
       })
@@ -99,7 +101,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setError(null)
     
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/register', {
+      const response = await axios.post(`${API_BASE}/api/auth/register`, {
         name,
         nickname,
         email,

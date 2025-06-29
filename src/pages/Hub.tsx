@@ -6,6 +6,8 @@ import { PlusCircle, LogOut, Users, DoorOpen, BookOpen, Trash2, LogOut as LeaveI
 import { motion, AnimatePresence, easeInOut } from 'framer-motion'
 import { Plus, ArrowRight, Eye, EyeSlash } from 'react-bootstrap-icons'
 
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+
 function generateClassroomCode(length = 6) {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let code = '';
@@ -62,7 +64,7 @@ const Hub = () => {
         const token = localStorage.getItem('token')
         if (!token) return
         
-        const response = await axios.get('http://localhost:3001/api/classrooms', {
+        const response = await axios.get(`${API_BASE}/api/classrooms`, {
           headers: { Authorization: `Bearer ${token}` }
         })
         setClassrooms(response.data)
@@ -93,7 +95,7 @@ const Hub = () => {
     const code = generateClassroomCode()
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.post('http://localhost:3001/api/classrooms', 
+      const res = await axios.post(`${API_BASE}/api/classrooms`, 
         { code, name: newClassroomName, password: newClassroomPassword },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -134,7 +136,7 @@ const Hub = () => {
     
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.post('http://localhost:3001/api/classrooms/join',
+      const res = await axios.post(`${API_BASE}/api/classrooms/join`,
         { code: joinCode.trim(), password: joinPassword },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -155,7 +157,7 @@ const Hub = () => {
     setActionLoading(true)
     try {
       const token = localStorage.getItem('token')
-      await axios.post(`http://localhost:3001/api/classrooms/${selectedClassroom.code}/leave`,
+      await axios.post(`${API_BASE}/api/classrooms/${selectedClassroom.code}/leave`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -177,7 +179,7 @@ const Hub = () => {
     setActionLoading(true)
     try {
       const token = localStorage.getItem('token')
-      await axios.delete(`http://localhost:3001/api/classrooms/${selectedClassroom.code}`,
+      await axios.delete(`${API_BASE}/api/classrooms/${selectedClassroom.code}`,
         { headers: { Authorization: `Bearer ${token}` } }
       )
       
