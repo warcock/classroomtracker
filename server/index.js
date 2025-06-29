@@ -17,7 +17,7 @@ const io = new Server(server, {
 })
 
 const allowedOrigins = [
-  "https://classroomhub-frontend.onrender.com", // update with your actual frontend Render URL after deploy
+  "https://classroomtracker.onrender.com", // your frontend Render URL
   "http://localhost:5173" // for local dev
 ];
 app.use(cors({
