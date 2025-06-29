@@ -424,6 +424,20 @@ io.on('connection', (socket) => {
   })
 })
 
+// Custom error handler middleware - must be last
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err)
+  res.status(500).json({ 
+    error: 'Internal server error',
+    message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
+  })
+})
+
+// 404 handler for unmatched routes
+app.use('*', (req, res) => {
+  res.status(404).json({ error: 'Route not found' })
+})
+
 const PORT = process.env.PORT || 3001
 
 // Connect to MongoDB

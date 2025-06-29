@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: classroomhub-backend
+    name: classroomtracker-backend
     env: node
     buildCommand: npm install
     startCommand: npm start
@@ -15,11 +15,11 @@ services:
     rootDir: server # Change if your backend is not in /server
 
   - type: static
-    name: classroomhub-frontend
+    name: classroomtracker-frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        value: https://classroomhub-backend.onrender.com # Replace with your backend Render URL after first deploy
+        value: https://classroomtracker-backend.onrender.com # Replace with your backend Render URL after first deploy
     plan: free
     rootDir: . # Change if your frontend is in a subfolder
