@@ -23,9 +23,9 @@ const Home = () => {
       <div className="position-absolute top-0 start-0 w-100 h-100" style={{ background: 'rgba(0,0,0,0.4)', zIndex: 0 }} />
 
       {/* Logo at top left */}
-      <div className="position-absolute top-0 start-0 mt-4 ms-4 z-2 home-logo" style={{userSelect: 'none'}}>
-        <span className="home-logo-main">Classroom</span>
-        <span className="home-logo-sub">Tracker</span>
+      <div className="position-absolute top-0 start-0 mt-4 ms-4 z-2" style={{userSelect: 'none'}}>
+        <span style={{display: 'block', fontWeight: 800, fontSize: '3.2rem', color: '#ffb84d', lineHeight: 1, letterSpacing: '-2px', fontFamily: 'Poppins, Inter, Arial, sans-serif'}}>Classroom</span>
+        <span style={{display: 'block', fontWeight: 800, fontSize: '3.2rem', color: '#fff', lineHeight: 1, letterSpacing: '-2px', fontFamily: 'Poppins, Inter, Arial, sans-serif', marginLeft: '32px'}}>Tracker</span>
       </div>
 
       {/* Navigation Bar - floating at top right */}
@@ -43,7 +43,7 @@ const Home = () => {
         {navOpen && (
           <>
             <div className="nav-backdrop" onClick={()=>setNavOpen(false)}></div>
-            <div className="position-absolute end-0 mt-2 nav-glass rounded-3 shadow-lg p-3 d-flex flex-column gap-2 animate-fade-in mobile-nav-menu">
+            <div className="position-absolute end-0 mt-2 nav-glass rounded-3 shadow-lg p-3 d-flex flex-column gap-2 animate-fade-in" style={{minWidth: 180}}>
               <Link to="/" className="nav-link nav-link-custom active" onClick={()=>setNavOpen(false)}>HOME</Link>
               <a href="#about" className="nav-link nav-link-custom" onClick={()=>setNavOpen(false)}>ABOUT US</a>
               <a href="#contact" className="nav-link nav-link-custom" onClick={()=>setNavOpen(false)}>CONTACT</a>
@@ -54,33 +54,35 @@ const Home = () => {
       </nav>
 
       {/* Main Content */}
-      <div className="flex-grow-1 d-flex align-items-center justify-content-center px-2 px-sm-3 px-md-4" style={{zIndex: 1, minHeight: '100vh'}}>
-        <div className="card shadow-lg border-0 rounded-4 px-2 px-sm-3 px-md-5 py-4 py-md-5 home-main-card">
-          <h2 className="fw-bold mb-4 text-warning text-center home-title">
+      <div className="flex-grow-1 d-flex align-items-center justify-content-center px-4" style={{zIndex: 1, minHeight: '100vh'}}>
+        <div className="card shadow-lg border-0 rounded-4 px-4 px-md-5 py-5" style={{maxWidth: 800, width: '100%', background: 'rgba(255,255,255,0.9)', fontFamily: 'Poppins, Inter, Arial, sans-serif'}}>
+          <h2 className="fw-bold mb-4 text-warning text-center" style={{fontSize: '2.7rem', letterSpacing: '-1px', marginTop: 0}}>
             Welcome to <span className="text-dark">Classroom Tracker</span>
           </h2>
-          <p className="fs-5 text-dark mb-4 text-center home-desc">
+          <p className="fs-5 text-dark mb-4 text-center" style={{fontSize: '1.25rem', fontWeight: 500}}>
             Stay on top of your schoolwork with ease. Classroom Tracker is a simple and powerful tool designed to help students and teachers organize assignments, track due dates, and manage classwork – all in one place.
           </p>
+          
           {/* Features Grid */}
           <div className="row g-3 mb-4">
             {features.map((feature, index) => (
-              <div key={index} className="col-12 col-sm-6">
-                <div className="d-flex align-items-start p-3 rounded-3 home-feature-card">
-                  <div className="text-warning me-3 home-feature-icon">
+              <div key={index} className="col-12 col-md-6">
+                <div className="d-flex align-items-start p-3 rounded-3" style={{background: '#f8f9fa', border: '1px solid #e9ecef'}}>
+                  <div className="text-warning me-3" style={{fontSize: '1.5rem'}}>
                     {feature.icon}
                   </div>
                   <div>
-                    <h6 className="fw-bold mb-1 text-dark home-feature-title">{feature.text}</h6>
-                    <p className="text-muted mb-0 small home-feature-desc">{feature.desc}</p>
+                    <h6 className="fw-bold mb-1 text-dark">{feature.text}</h6>
+                    <p className="text-muted mb-0 small">{feature.desc}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
+
           {/* CTA Button */}
           <div className="text-center">
-            <Link to="/register" className="btn py-2 px-4 home-cta-btn">
+            <Link to="/register" className="btn py-2 px-4" style={{background: '#ffb84d', color: '#222', fontWeight: 700, fontSize: '1.2rem', borderRadius: '2rem', fontFamily: 'Poppins, Inter, Arial, sans-serif'}}>
               Get Started
             </Link>
           </div>
@@ -88,29 +90,29 @@ const Home = () => {
       </div>
 
       {/* About Us Section */}
-      <section id="about" className="d-flex align-items-center justify-content-center py-5 home-section">
-        <div className="card shadow-lg border-0 rounded-4 px-2 px-sm-4 px-md-5 py-4 py-md-5 mx-auto home-section-card">
-          <h2 className="fw-bold mb-3 text-warning text-center home-section-title">About Us</h2>
-          <p className="text-dark text-center mb-2 home-section-lead">
+      <section id="about" className="d-flex align-items-center justify-content-center py-5" style={{minHeight: '60vh', zIndex: 1}}>
+        <div className="card shadow-lg border-0 rounded-4 px-4 px-md-5 py-5 mx-auto" style={{maxWidth: 600, background: 'rgba(255,255,255,0.9)', fontFamily: 'Poppins, Inter, Arial, sans-serif'}}>
+          <h2 className="fw-bold mb-3 text-warning text-center" style={{fontSize: '2.1rem', letterSpacing: '-1px'}}>About Us</h2>
+          <p className="text-dark text-center mb-2" style={{fontWeight: 600, fontSize: '1.1rem'}}>
             Made by Zen and Potter - 307 EPBM'25
           </p>
           <p className="text-dark text-center mb-2">
             Contact: <a href="mailto:45808@benjama.ac.th" className="text-warning">45808@benjama.ac.th</a> &amp; <a href="mailto:45816@benjama.ac.th" className="text-warning">45816@benjama.ac.th</a>
           </p>
-          <p className="text-secondary text-center mb-0 home-section-desc">
+          <p className="text-secondary text-center mb-0" style={{fontSize: '1.05rem'}}>
             We built Classroom Tracker to help students and teachers stay organized, collaborate, and succeed together. If you have feedback, ideas, or just want to say hi, feel free to reach out!
           </p>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="d-flex align-items-center justify-content-center py-5 home-section">
-        <div className="card shadow-lg border-0 rounded-4 px-2 px-sm-4 px-md-5 py-4 py-md-5 mx-auto home-section-card">
-          <h2 className="fw-bold mb-3 text-warning text-center home-section-title">Contact Us</h2>
-          <p className="text-dark text-center mb-2 home-section-lead">
+      <section id="contact" className="d-flex align-items-center justify-content-center py-5" style={{minHeight: '60vh', zIndex: 1}}>
+        <div className="card shadow-lg border-0 rounded-4 px-4 px-md-5 py-5 mx-auto" style={{maxWidth: 600, background: 'rgba(255,255,255,0.9)', fontFamily: 'Poppins, Inter, Arial, sans-serif'}}>
+          <h2 className="fw-bold mb-3 text-warning text-center" style={{fontSize: '2.1rem', letterSpacing: '-1px'}}>Contact Us</h2>
+          <p className="text-dark text-center mb-2" style={{fontWeight: 600, fontSize: '1.1rem'}}>
             Email us at <a href="mailto:45808@benjama.ac.th" className="text-warning">45808@benjama.ac.th</a> or <a href="mailto:45816@benjama.ac.th" className="text-warning">45816@benjama.ac.th</a>
           </p>
-          <p className="text-secondary text-center mb-0 home-section-desc">
+          <p className="text-secondary text-center mb-0" style={{fontSize: '1.05rem'}}>
             We love hearing from you! Whether you have questions, need support, or want to share your ideas, just drop us a message. We'll get back to you as soon as possible.
           </p>
         </div>
@@ -163,108 +165,10 @@ const Home = () => {
           from { opacity: 0; transform: translateY(-10px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        /* Responsive logo */
-        .home-logo-main {
-          display: block;
-          font-weight: 800;
-          font-size: 2.2rem;
-          color: #ffb84d;
-          line-height: 1;
-          letter-spacing: -2px;
-          font-family: 'Poppins', Inter, Arial, sans-serif;
-        }
-        .home-logo-sub {
-          display: block;
-          font-weight: 800;
-          font-size: 2.2rem;
-          color: #fff;
-          line-height: 1;
-          letter-spacing: -2px;
-          font-family: 'Poppins', Inter, Arial, sans-serif;
-          margin-left: 18px;
-        }
-        @media (min-width: 400px) {
-          .home-logo-main, .home-logo-sub { font-size: 2.7rem; }
-        }
-        @media (min-width: 600px) {
-          .home-logo-main, .home-logo-sub { font-size: 3.2rem; }
-          .home-logo-sub { margin-left: 32px; }
-        }
-        .mobile-nav-menu {
-          min-width: 70vw !important;
-          max-width: 90vw !important;
-        }
-        .home-main-card {
-          max-width: 98vw !important;
-          width: 100%;
-        }
-        .home-title {
-          font-size: 2rem;
-        }
-        .home-desc {
-          font-size: 1.05rem;
-        }
-        .home-feature-card {
-          background: #f8f9fa;
-          border: 1px solid #e9ecef;
-        }
-        .home-feature-icon {
-          font-size: 1.3rem;
-        }
-        .home-feature-title {
-          font-size: 1.05rem;
-        }
-        .home-feature-desc {
-          font-size: 0.95rem;
-        }
-        .home-cta-btn {
-          background: #ffb84d;
-          color: #222;
-          font-weight: 700;
-          font-size: 1.1rem;
-          border-radius: 2rem;
-          font-family: 'Poppins', Inter, Arial, sans-serif;
-          width: 100%;
-          max-width: 320px;
-        }
-        .home-section {
-          padding-left: 0.5rem;
-          padding-right: 0.5rem;
-        }
-        .home-section-card {
-          max-width: 98vw !important;
-        }
-        .home-section-title {
-          font-size: 1.3rem;
-        }
-        .home-section-lead {
-          font-size: 1rem;
-        }
-        .home-section-desc {
-          font-size: 0.98rem;
-        }
-        @media (min-width: 400px) {
-          .home-title { font-size: 2.2rem; }
-          .home-section-title { font-size: 1.5rem; }
-        }
-        @media (min-width: 600px) {
-          .home-title { font-size: 2.7rem; }
-          .home-section-title { font-size: 2.1rem; }
-        }
         @media (max-width: 991.98px) {
-          .card, .home-main-card, .home-section-card {
+          .card {
             max-width: 98vw !important;
             margin: 1rem !important;
-            padding-left: 1rem !important;
-            padding-right: 1rem !important;
-          }
-        }
-        @media (max-width: 575.98px) {
-          .home-main-card, .home-section-card {
-            padding: 1.2rem 0.5rem !important;
-          }
-          .home-title, .home-section-title {
-            font-size: 1.3rem;
           }
         }
       `}</style>
