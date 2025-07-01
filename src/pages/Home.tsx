@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <div
       className="min-vh-100 position-relative d-flex flex-column"
-      style={{ backgroundImage: 'url(public/Rama5UpscaledBetter.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+      style={{ backgroundImage: 'url(/Rama5UpscaledBetter.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
       {/* Overlay */}
       <div className="position-absolute top-0 start-0 w-100 h-100" style={{ background: 'rgba(0,0,0,0.4)', zIndex: 0 }} />
@@ -169,6 +169,11 @@ const Home = () => {
           .card {
             max-width: 98vw !important;
             margin: 1rem !important;
+          }
+        }
+        @media (max-width: 575.98px) {
+          .position-absolute.top-0.start-0.mt-4.ms-4.z-2 {
+            display: none !important;
           }
         }
       `}</style>

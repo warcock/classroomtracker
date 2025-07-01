@@ -266,7 +266,7 @@ const Classroom = () => {
         .classroom-bg {
           position: relative;
           min-height: 100vh;
-          background: url('/public/Rama5UpscaledBetter.jpg') center/cover no-repeat fixed;
+          background: url('/Rama5UpscaledBetter.jpg') center/cover no-repeat fixed;
         }
         .classroom-bg::before {
           content: '';

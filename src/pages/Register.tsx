@@ -16,6 +16,7 @@ const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const { register, isLoading, error } = useAuth()
   const navigate = useNavigate()
+  const [navOpen, setNavOpen] = React.useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
@@ -42,7 +43,7 @@ const Register = () => {
   return (
     <div
       className="min-vh-100 position-relative d-flex flex-column"
-      style={{ backgroundImage: 'url(public/Rama5UpscaledBetter.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+      style={{ backgroundImage: 'url(/Rama5UpscaledBetter.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
       {/* Overlay */}
       <div className="position-absolute top-0 start-0 w-100 h-100" style={{ background: 'rgba(0,0,0,0.4)', zIndex: 0 }} />
@@ -61,6 +62,21 @@ const Register = () => {
           <a href="/#contact" className="nav-link nav-link-custom px-2">CONTACT</a>
           <Link to="/login" className="nav-link nav-link-custom px-2">LOGIN</Link>
         </div>
+        {/* Hamburger for mobile */}
+        <button className="d-md-none btn nav-glass rounded-circle p-2 border-0 shadow-lg" aria-label="Open navigation menu" onClick={() => setNavOpen(v => !v)}>
+          <span className="navbar-toggler-icon" />
+        </button>
+        {navOpen && (
+          <>
+            <div className="nav-backdrop" onClick={()=>setNavOpen(false)}></div>
+            <div className="position-absolute end-0 mt-2 nav-glass rounded-3 shadow-lg p-3 d-flex flex-column gap-2 animate-fade-in" style={{minWidth: 180}}>
+              <Link to="/" className="nav-link nav-link-custom" onClick={()=>setNavOpen(false)}>HOME</Link>
+              <a href="/#about" className="nav-link nav-link-custom" onClick={()=>setNavOpen(false)}>ABOUT US</a>
+              <a href="/#contact" className="nav-link nav-link-custom" onClick={()=>setNavOpen(false)}>CONTACT</a>
+              <Link to="/login" className="nav-link nav-link-custom" onClick={()=>setNavOpen(false)}>LOGIN</Link>
+            </div>
+          </>
+        )}
       </nav>
 
       {/* Register Card */}
@@ -232,6 +248,20 @@ const Register = () => {
           border-radius: 2px;
           margin-top: 2px;
         }
+        .nav-backdrop {
+          position: fixed;
+          inset: 0;
+          background: rgba(0,0,0,0.18);
+          z-index: 1040;
+          animation: fadeIn 0.2s;
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.25s;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
         .form-control:focus, .input-group:focus-within, .form-select:focus {
           border-color: #ffb84d !important;
           box-shadow: 0 0 0 2px #ffb84d33 !important;
@@ -246,6 +276,9 @@ const Register = () => {
             max-width: 98vw !important;
             padding: 2rem 1rem !important;
           }
+        }
+        @media (max-width: 575.98px) {
+          /* Logo is now always visible */
         }
       `}</style>
     </div>
