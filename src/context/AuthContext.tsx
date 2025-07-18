@@ -10,6 +10,7 @@ interface User {
   nickname: string
   email: string
   role: 'student' | 'teacher'
+  avatar?: string
   createdAt?: string
   __v?: number
 }
@@ -23,7 +24,7 @@ interface AuthContextType {
   isLoading: boolean
   error: string | null
   loading: boolean
-  updateProfile: (profile: { name: string; nickname: string }) => Promise<void>
+  updateProfile: (profile: { name: string; nickname: string; avatar?: string }) => Promise<void>
   updateEmail: (email: string) => Promise<void>
   updatePassword: (currentPassword: string, newPassword: string) => Promise<void>
 }
@@ -132,7 +133,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setError(null)
   }
 
-  const updateProfile = async (profile: { name: string; nickname: string }) => {
+  const updateProfile = async (profile: { name: string; nickname: string; avatar?: string }) => {
     setIsLoading(true)
     setError(null)
     try {

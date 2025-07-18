@@ -5,6 +5,7 @@ import axios from 'axios'
 import { PlusCircle, LogOut, Users, DoorOpen, BookOpen, Trash2, LogOut as LeaveIcon, Settings as SettingsIcon } from 'lucide-react'
 import { motion, AnimatePresence, easeInOut } from 'framer-motion'
 import { Plus, ArrowRight, Eye, EyeSlash } from 'react-bootstrap-icons'
+import Avataaars from 'avataaars'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
@@ -15,6 +16,11 @@ function generateClassroomCode(length = 6) {
     code += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   return code;
+}
+
+function avatarStringToConfig(str: string | undefined) {
+  if (!str) return undefined
+  try { return JSON.parse(str) } catch { return undefined }
 }
 
 interface Classroom {
@@ -217,8 +223,12 @@ return (
         {/* Header */}
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
           <div className="d-flex align-items-center gap-3">
-            <div className="bg-warning rounded-circle d-flex align-items-center justify-content-center" style={{width: 56, height: 56, fontSize: 28, fontWeight: 700, color: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.08)'}}>
-              {user?.nickname?.charAt(0).toUpperCase() || user?.name?.charAt(0).toUpperCase() || 'U'}
+            <div className="bg-warning rounded-circle d-flex align-items-center justify-content-center" style={{width: 56, height: 56, fontSize: 28, fontWeight: 700, color: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', background: '#fff'}}>
+              {user?.avatar && avatarStringToConfig(user.avatar) ? (
+                <Avataaars style={{width:48,height:48}} {...avatarStringToConfig(user.avatar)} />
+              ) : (
+                user?.nickname?.charAt(0).toUpperCase() || user?.name?.charAt(0).toUpperCase() || 'U'
+              )}
             </div>
             <div>
               <h2 className="fw-bold mb-0" style={{fontSize: '2.1rem'}}>Welcome, {user?.nickname || user?.name}!</h2>
@@ -226,9 +236,9 @@ return (
             </div>
           </div>
           <div className="d-flex gap-2 align-items-center">
-            <button className="btn btn-outline-danger rounded-pill px-4 d-flex align-items-center gap-2" onClick={logout}>
-              <LogOut size={18} /> Log out
-            </button>
+          <button className="btn btn-outline-danger rounded-pill px-4 d-flex align-items-center gap-2" onClick={logout}>
+            <LogOut size={18} /> Log out
+          </button>
             <button className="btn btn-outline-secondary rounded-pill px-3 d-flex align-items-center gap-2" onClick={() => navigate('/settings')} title="Settings">
               <SettingsIcon size={18} />
             </button>

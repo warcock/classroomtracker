@@ -3,13 +3,72 @@ import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { Person, Envelope, Key, PencilSquare, ArrowLeft } from 'react-bootstrap-icons'
 import { motion } from 'framer-motion'
+import Avataaars from 'avataaars'
+
+const avataaarsOptions = {
+  topType: [
+    'NoHair', 'ShortHairShortFlat', 'ShortHairShortRound', 'ShortHairDreads01', 'LongHairStraight', 'LongHairCurly', 'Hat', 'Hijab', 'Turban', 'WinterHat2', 'Eyepatch', 'LongHairBigHair', 'LongHairBun', 'LongHairCurvy', 'LongHairFro', 'LongHairFroBand', 'LongHairNotTooLong', 'LongHairShavedSides', 'LongHairMiaWallace', 'LongHairStraight2', 'LongHairStraightStrand', 'ShortHairDreads02', 'ShortHairFrizzle', 'ShortHairShaggy', 'ShortHairShaggyMullet', 'ShortHairSides', 'ShortHairTheCaesar', 'ShortHairTheCaesarSidePart'
+  ],
+  accessoriesType: [
+    'Blank', 'Kurt', 'Prescription01', 'Prescription02', 'Round', 'Sunglasses', 'Wayfarers'
+  ],
+  hairColor: [
+    'Auburn', 'Black', 'Blonde', 'BlondeGolden', 'Brown', 'BrownDark', 'PastelPink', 'Platinum', 'Red', 'SilverGray'
+  ],
+  facialHairType: [
+    'Blank', 'BeardMedium', 'BeardLight', 'BeardMajestic', 'MoustacheFancy', 'MoustacheMagnum'
+  ],
+  facialHairColor: [
+    'Auburn', 'Black', 'Blonde', 'BlondeGolden', 'Brown', 'BrownDark', 'Platinum', 'Red'
+  ],
+  clotheType: [
+    'BlazerShirt', 'BlazerSweater', 'CollarSweater', 'GraphicShirt', 'Hoodie', 'Overall', 'ShirtCrewNeck', 'ShirtScoopNeck', 'ShirtVNeck'
+  ],
+  clotheColor: [
+    'Black', 'Blue01', 'Blue02', 'Blue03', 'Gray01', 'Gray02', 'Heather', 'PastelBlue', 'PastelGreen', 'PastelOrange', 'PastelRed', 'PastelYellow', 'Pink', 'Red', 'White'
+  ],
+  eyeType: [
+    'Close', 'Cry', 'Default', 'Dizzy', 'EyeRoll', 'Happy', 'Hearts', 'Side', 'Squint', 'Surprised', 'Wink', 'WinkWacky'
+  ],
+  eyebrowType: [
+    'Angry', 'AngryNatural', 'Default', 'DefaultNatural', 'FlatNatural', 'RaisedExcited', 'RaisedExcitedNatural', 'SadConcerned', 'SadConcernedNatural', 'UnibrowNatural', 'UpDown', 'UpDownNatural'
+  ],
+  mouthType: [
+    'Concerned', 'Default', 'Disbelief', 'Eating', 'Grimace', 'Sad', 'ScreamOpen', 'Serious', 'Smile', 'Tongue', 'Twinkle', 'Vomit'
+  ],
+  skinColor: [
+    'Tanned', 'Yellow', 'Pale', 'Light', 'Brown', 'DarkBrown', 'Black'
+  ]
+}
+
+function getRandomOption(arr: string[]) {
+  return arr[Math.floor(Math.random() * arr.length)]
+}
+
+function getRandomAvatarConfig() {
+  const config: any = {}
+  for (const key in avataaarsOptions) {
+    config[key] = getRandomOption(avataaarsOptions[key as keyof typeof avataaarsOptions])
+  }
+  return config
+}
+
+function avatarConfigToString(config: any) {
+  return JSON.stringify(config)
+}
+function avatarStringToConfig(str: string | undefined) {
+  if (!str) return getRandomAvatarConfig()
+  try { return JSON.parse(str) } catch { return getRandomAvatarConfig() }
+}
 
 const Settings = () => {
   const { user, updateProfile, updateEmail, updatePassword, isLoading, error } = useAuth()
   const [profileForm, setProfileForm] = useState({
     name: user?.name || '',
-    nickname: user?.nickname || ''
+    nickname: user?.nickname || '',
+    avatar: user?.avatar || avatarConfigToString(getRandomAvatarConfig())
   })
+  const [avatarConfig, setAvatarConfig] = useState<any>(avatarStringToConfig(profileForm.avatar))
   const [emailForm, setEmailForm] = useState({
     email: ''
   })
@@ -28,6 +87,18 @@ const Settings = () => {
   // Handlers
   const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProfileForm({ ...profileForm, [e.target.name]: e.target.value })
+    setSuccess(null)
+  }
+  const handleAvatarChange = (key: string, value: string) => {
+    const newConfig = { ...avatarConfig, [key]: value }
+    setAvatarConfig(newConfig)
+    setProfileForm({ ...profileForm, avatar: avatarConfigToString(newConfig) })
+    setSuccess(null)
+  }
+  const handleRandomAvatar = () => {
+    const randomConfig = getRandomAvatarConfig()
+    setAvatarConfig(randomConfig)
+    setProfileForm({ ...profileForm, avatar: avatarConfigToString(randomConfig) })
     setSuccess(null)
   }
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,6 +158,32 @@ const Settings = () => {
         </div>
         {section==='profile' && (
           <form onSubmit={handleProfileSubmit} autoComplete="off">
+            <div className="mb-3 text-center">
+              <div className="mb-2" style={{display:'flex',justifyContent:'center',alignItems:'center',gap:8}}>
+                <span style={{borderRadius: '50%', background: '#f8f9fa', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 80, height: 80, border: '2.5px solid #a259ff'}}>
+                  <Avataaars style={{width:64,height:64}} {...avatarConfig} />
+                </span>
+                <button type="button" className="btn btn-light border border-2 rounded-circle ms-2" title="Randomize Avatar" onClick={handleRandomAvatar} style={{width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                  <svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 2v2a6 6 0 1 1-6 6H2a8 8 0 1 0 8-8z" fill="#a259ff"/></svg>
+                </button>
+              </div>
+              <div className="row g-2 mb-2">
+                {Object.entries(avataaarsOptions).map(([key, options]) => (
+                  <div className="col-6" key={key}>
+                    <label className="form-label small fw-bold text-secondary">{key.replace(/([A-Z])/g, ' $1')}</label>
+                    <select
+                      className="form-select form-select-sm rounded-pill border-2"
+                      value={avatarConfig[key]}
+                      onChange={e => handleAvatarChange(key, e.target.value)}
+                    >
+                      {options.map(opt => (
+                        <option value={opt} key={opt}>{opt}</option>
+                      ))}
+                    </select>
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className="mb-3">
               <label className="form-label fw-bold">Full Name</label>
               <div className="input-group rounded-pill border border-2" style={{overflow: 'hidden', borderColor: '#a259ff', background: '#fff'}}>

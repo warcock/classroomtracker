@@ -37,6 +37,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, enum: ['student', 'teacher'], default: 'student' },
+  avatar: { type: String, default: 'emoji:😀' },
   createdAt: { type: Date, default: Date.now }
 })
 
@@ -193,10 +194,12 @@ app.get('/api/auth/profile', authenticateToken, async (req, res) => {
 // Protected route to update user profile
 app.put('/api/auth/profile', authenticateToken, async (req, res) => {
   try {
-    const { name, nickname } = req.body
+    const { name, nickname, avatar } = req.body
+    const updateFields = { name, nickname }
+    if (avatar) updateFields.avatar = avatar
     const user = await User.findByIdAndUpdate(
       req.user.userId,
-      { name, nickname },
+      updateFields,
       { new: true, runValidators: true, select: '-password' }
     )
     if (!user) {
