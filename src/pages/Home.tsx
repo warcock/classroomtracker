@@ -23,9 +23,10 @@ const Home = () => {
       <div className="position-absolute top-0 start-0 w-100 h-100" style={{ background: 'rgba(0,0,0,0.4)', zIndex: 0 }} />
 
       {/* Logo at top left */}
-      <div className="position-absolute top-0 start-0 mt-4 ms-4 z-2" style={{userSelect: 'none'}}>
-        <span style={{display: 'block', fontWeight: 800, fontSize: '3.2rem', color: '#ffb84d', lineHeight: 1, letterSpacing: '-2px', fontFamily: 'Poppins, Inter, Arial, sans-serif'}}>Classroom</span>
-        <span style={{display: 'block', fontWeight: 800, fontSize: '3.2rem', color: '#fff', lineHeight: 1, letterSpacing: '-2px', fontFamily: 'Poppins, Inter, Arial, sans-serif', marginLeft: '32px'}}>Tracker</span>
+      <div className="position-absolute top-0 start-0 mt-4 ms-4 z-2" style={{ userSelect: 'none' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1px' }}>
+          <img src="/1.png" alt="Logo" style={{ width: '200px', height: '200px' }} />
+        </div>
       </div>
 
       {/* Navigation Bar - floating at top right */}

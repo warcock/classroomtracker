@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { PlusCircle, LogOut, Users, DoorOpen, BookOpen, Trash2, LogOut as LeaveIcon } from 'lucide-react'
+import { PlusCircle, LogOut, Users, DoorOpen, BookOpen, Trash2, LogOut as LeaveIcon, Settings as SettingsIcon } from 'lucide-react'
 import { motion, AnimatePresence, easeInOut } from 'framer-motion'
 import { Plus, ArrowRight, Eye, EyeSlash } from 'react-bootstrap-icons'
 
@@ -194,15 +194,26 @@ const Hub = () => {
     }
   }
 
-  return (
-    <div className="container py-5 d-flex justify-content-center align-items-start" style={{minHeight: '100vh'}}>
-      <motion.div
-        className="card shadow-lg border-0 rounded-4 p-4 w-100"
-        style={{maxWidth: 1100, background: 'rgba(255,255,255,0.96)'}}
-        initial="hidden"
-        animate="visible"
-        variants={cardVariants}
-      >
+
+return (
+  <div className="w-100 min-vh-100 d-flex flex-column" style={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
+    <motion.div
+      className="card border-0 rounded-0 p-4 w-100"
+      style={{
+        width: '100%',
+        height: '100vh',
+        maxWidth: 'none',
+        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.7))',
+        boxShadow: 'none', // Ensure no shadow
+        border: 'none', // Remove any border
+        borderRadius: '0', // Ensure sharp corners with no radius
+        padding: '20px',
+      }}
+      initial="hidden"
+      animate="visible"
+      variants={cardVariants}
+    >
+
         {/* Header */}
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
           <div className="d-flex align-items-center gap-3">
@@ -214,9 +225,14 @@ const Hub = () => {
               <div className="text-muted" style={{fontSize: '1.1rem'}}>{user?.email}</div>
             </div>
           </div>
-          <button className="btn btn-outline-danger rounded-pill px-4 d-flex align-items-center gap-2" onClick={logout}>
-            <LogOut size={18} /> Log out
-          </button>
+          <div className="d-flex gap-2 align-items-center">
+            <button className="btn btn-outline-danger rounded-pill px-4 d-flex align-items-center gap-2" onClick={logout}>
+              <LogOut size={18} /> Log out
+            </button>
+            <button className="btn btn-outline-secondary rounded-pill px-3 d-flex align-items-center gap-2" onClick={() => navigate('/settings')} title="Settings">
+              <SettingsIcon size={18} />
+            </button>
+          </div>
         </div>
 
         {/* Actions */}

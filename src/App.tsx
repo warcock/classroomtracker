@@ -4,6 +4,7 @@ import Classroom from './pages/Classroom'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Hub from './pages/Hub'
+import Settings from './pages/Settings'
 import { ClassroomProvider } from './context/ClassroomContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import AboutUs from './pages/AboutUs'
@@ -47,6 +48,7 @@ function AppRoutes() {
         <Route path="/classroom/:id" element={<PrivateRoute><motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} style={{minHeight: '100vh'}}><Classroom /></motion.div></PrivateRoute>} />
         <Route path="/about" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} style={{minHeight: '100vh'}}><AboutUs /></motion.div>} />
         <Route path="/contact" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} style={{minHeight: '100vh'}}><Contact /></motion.div>} />
+        <Route path="/settings" element={<PrivateRoute><motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} style={{minHeight: '100vh'}}><Settings /></motion.div></PrivateRoute>} />
       </Routes>
     </AnimatePresence>
   )

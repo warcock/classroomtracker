@@ -23,6 +23,9 @@ interface AuthContextType {
   isLoading: boolean
   error: string | null
   loading: boolean
+  updateProfile: (profile: { name: string; nickname: string }) => Promise<void>
+  updateEmail: (email: string) => Promise<void>
+  updatePassword: (currentPassword: string, newPassword: string) => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -129,6 +132,47 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setError(null)
   }
 
+  const updateProfile = async (profile: { name: string; nickname: string }) => {
+    setIsLoading(true)
+    setError(null)
+    try {
+      const response = await axios.put(`${API_BASE}/api/auth/profile`, profile)
+      setUser(response.data)
+    } catch (error: any) {
+      setError(error.response?.data?.error || 'Profile update failed')
+      throw error
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const updateEmail = async (email: string) => {
+    setIsLoading(true)
+    setError(null)
+    try {
+      const response = await axios.put(`${API_BASE}/api/auth/email`, { email })
+      setUser(response.data)
+    } catch (error: any) {
+      setError(error.response?.data?.error || 'Email update failed')
+      throw error
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const updatePassword = async (currentPassword: string, newPassword: string) => {
+    setIsLoading(true)
+    setError(null)
+    try {
+      await axios.put(`${API_BASE}/api/auth/password`, { currentPassword, newPassword })
+    } catch (error: any) {
+      setError(error.response?.data?.error || 'Password update failed')
+      throw error
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   const value: AuthContextType = {
     user,
     token,
@@ -137,7 +181,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     logout,
     isLoading,
     error,
-    loading
+    loading,
+    updateProfile,
+    updateEmail,
+    updatePassword
   }
 
   if (loading) {

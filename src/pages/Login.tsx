@@ -33,9 +33,10 @@ const Login = () => {
       <div className="position-absolute top-0 start-0 w-100 h-100" style={{ background: 'rgba(0,0,0,0.4)', zIndex: 0 }} />
 
       {/* Logo at top left */}
-      <div className="position-absolute top-0 start-0 mt-4 ms-4 z-2" style={{userSelect: 'none'}}>
-        <span style={{display: 'block', fontWeight: 800, fontSize: '3.2rem', color: '#ffb84d', lineHeight: 1, letterSpacing: '-2px', fontFamily: 'Poppins, Inter, Arial, sans-serif'}}>Classroom</span>
-        <span style={{display: 'block', fontWeight: 800, fontSize: '3.2rem', color: '#fff', lineHeight: 1, letterSpacing: '-2px', fontFamily: 'Poppins, Inter, Arial, sans-serif', marginLeft: '32px'}}>Tracker</span>
+      <div className="position-absolute top-0 start-0 mt-4 ms-4 z-2" style={{ userSelect: 'none' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1px' }}>
+          <img src="/1.png" alt="Logo" style={{ width: '200px', height: '200px' }} />
+        </div>
       </div>
 
       {/* Navigation Bar - floating at top right */}
@@ -65,8 +66,8 @@ const Login = () => {
 
       {/* Login Card */}
       <div className="flex-grow-1 d-flex align-items-center justify-content-end pe-0 pe-md-5" style={{zIndex: 1, minHeight: '100vh'}}>
-        <div className="card shadow-lg border-0 rounded-4 px-4 px-md-5 py-5" style={{maxWidth: 600, minHeight: '70vh', width: '100%', background: 'rgba(255,255,255,0.9)', fontFamily: 'Poppins, Inter, Arial, sans-serif', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-          <h2 className="fw-bold mb-4 text-warning text-start" style={{fontSize: '2.7rem', letterSpacing: '-1px', marginTop: 0}}>Sign in</h2>
+        <div className="card shadow-lg border-0 rounded-4 px-4 px-md-5 py-5" style={{maxWidth: 600, minHeight: '40vh', width: '100%', background: 'rgba(255,255,255,0.9)', fontFamily: 'Poppins, Inter, Arial, sans-serif', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+          <h2 className="fw-bold mb-4 text-warning text-start" style={{fontSize: '2.7rem', letterSpacing: '-1px', marginTop: 0}}>Login</h2>
           {unauth && (
             <div className="alert alert-warning mb-3" role="alert">
               You must be signed in to access that page.
@@ -93,7 +94,7 @@ const Login = () => {
               </div>
             </div>
             <div className="mb-3">
-              <div className="input-group rounded-pill border-0" style={{overflow: 'hidden', background: '#ededed'}}>
+              <div className="input-group rounded-pill border-0" style={{overflow: 'hidden', background: '#ffffffff'}}>
                 <span className="input-group-text bg-transparent border-0"><Lock size={20} /></span>
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -134,7 +135,7 @@ const Login = () => {
                   Signing in...
                 </>
               ) : (
-                'Sign in'
+                'Login'
               )}
             </button>
             <div className="text-start">

@@ -49,9 +49,10 @@ const Register = () => {
       <div className="position-absolute top-0 start-0 w-100 h-100" style={{ background: 'rgba(0,0,0,0.4)', zIndex: 0 }} />
 
       {/* Logo at top left */}
-      <div className="position-absolute top-0 start-0 mt-4 ms-4 z-2" style={{userSelect: 'none'}}>
-        <span style={{display: 'block', fontWeight: 800, fontSize: '3.2rem', color: '#ffb84d', lineHeight: 1, letterSpacing: '-2px', fontFamily: 'Poppins, Inter, Arial, sans-serif'}}>Classroom</span>
-        <span style={{display: 'block', fontWeight: 800, fontSize: '3.2rem', color: '#fff', lineHeight: 1, letterSpacing: '-2px', fontFamily: 'Poppins, Inter, Arial, sans-serif', marginLeft: '32px'}}>Tracker</span>
+      <div className="position-absolute top-0 start-0 mt-4 ms-4 z-2" style={{ userSelect: 'none' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1px' }}>
+          <img src="/1.png" alt="Logo" style={{ width: '200px', height: '200px' }} />
+        </div>
       </div>
 
       {/* Navigation Bar - floating at top right */}
@@ -149,7 +150,7 @@ const Register = () => {
               </select>
             </div>
             <div className="mb-3">
-              <div className="input-group rounded-pill border-0" style={{overflow: 'hidden', background: '#ededed'}}>
+              <div className="input-group rounded-pill border-0" style={{overflow: 'hidden', background: '#ffffffff'}}>
                 <span className="input-group-text bg-transparent border-0"><Lock size={20} /></span>
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -173,7 +174,7 @@ const Register = () => {
               </div>
             </div>
             <div className="mb-3">
-              <div className="input-group rounded-pill border-0" style={{overflow: 'hidden', background: '#ededed'}}>
+              <div className="input-group rounded-pill border-0" style={{overflow: 'hidden', background: '#ffffffff'}}>
                 <span className="input-group-text bg-transparent border-0"><Lock size={20} /></span>
                 <input
                   type={showConfirmPassword ? 'text' : 'password'}
@@ -212,7 +213,7 @@ const Register = () => {
               )}
             </button>
             <div className="text-start">
-              <span style={{fontFamily: 'Poppins, Inter, Arial, sans-serif', fontWeight: 500, fontSize: '1rem'}}>Already have an account? <Link to="/login" className="text-warning fw-bold">Sign in</Link></span>
+              <span style={{fontFamily: 'Poppins, Inter, Arial, sans-serif', fontWeight: 500, fontSize: '1rem'}}>Already have an account? <Link to="/login" className="text-warning fw-bold">Login</Link></span>
             </div>
           </form>
         </div>
