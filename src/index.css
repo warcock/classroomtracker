@@ -1,0 +1,72 @@
+@import  url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: url('/Rama5UpscaledBetter.jpg') center center/cover no-repeat fixed;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: -1;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-gradient {
+  background: linear-gradient(45deg, #ffb84d, #ffa726);
+  border: none;
+  color: #222;
+  transition: transform 0.2s;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  color: #222;
+}
+
+.subject-card {
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.subject-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.subject-thai { border-left-color: #dc3545; }
+.subject-english { border-left-color: #198754; }
+.subject-math { border-left-color: #0d6efd; }
+.subject-science { border-left-color: #fd7e14; }
+.subject-socials { border-left-color: #6f42c1; }
+
+.subject-social { border-left-color: #20c997; } /* teal */
+.subject-history { border-left-color: #fd7e14; } /* orange */
+.subject-chinese { border-left-color: #f43f5e; } /* rose/pink */
+
+/* Custom badge backgrounds for subject pills */
+.badge.bg-teal { background-color: #20c997 !important; color: #fff !important; }
+.badge.bg-orange { background-color: #fd7e14 !important; color: #fff !important; }
+.badge.bg-rose { background-color: #f43f5e !important; color: #fff !important; }
+
+.chat-message {
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+ 

@@ -1,0 +1,46 @@
+{
+   "name": "classroom-task-manager",
+   "private": true,
+   "version": "0.0.0",
+   "type": "module",
+   "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "preview": "vite preview",
+      "postinstall": "shx chmod +x node_modules/.bin/vite"
+   },
+   "dependencies": {
+      "@dicebear/adventurer": "^9.2.3",
+      "@dicebear/avatars": "^4.10.8",
+      "avataaars": "^2.0.0",
+      "axios": "^1.6.2",
+      "bcryptjs": "^3.0.2",
+      "bootstrap": "^5.3.0",
+      "cors": "^2.8.5",
+      "dotenv": "^17.0.0",
+      "express": "^4.18.2",
+      "framer-motion": "^12.19.2",
+      "jsonwebtoken": "^9.0.2",
+      "lucide-react": "^0.244.0",
+      "mongoose": "^8.0.3",
+      "react": "^18.2.0",
+      "react-avataaars": "^0.2.3",
+      "react-bootstrap-icons": "^1.11.6",
+      "react-dom": "^18.2.0",
+      "react-router-dom": "^6.8.1",
+      "socket.io": "^4.7.4",
+      "socket.io-client": "^4.7.4",
+      "uuid": "^9.0.1"
+   },
+   "devDependencies": {
+      "@types/react": "^18.0.37",
+      "@types/react-dom": "^18.0.11",
+      "@vitejs/plugin-react": "^4.0.0",
+      "autoprefixer": "^10.4.21",
+      "postcss": "^8.4.24",
+      "shx": "^0.4.0",
+      "tailwindcss": "^3.3.2",
+      "typescript": "^5.0.2",
+      "vite": "^5.0.0"
+   }
+}

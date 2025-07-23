@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: classroomtracker-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: MONGODB_URI
+        sync: false # Set this in the Render dashboard
+      - key: JWT_SECRET
+        sync: false # Set this in the Render dashboard
+    plan: free
+    rootDir: server # Change if your backend is not in /server
+
+  - type: static
+    name: classroomtracker-frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://classroomtracker-backend.onrender.com # Replace with your backend Render URL after first deploy
+    plan: free
+    rootDir: . # Change if your frontend is in a subfolder
