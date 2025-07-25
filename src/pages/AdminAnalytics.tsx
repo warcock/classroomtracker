@@ -10,6 +10,8 @@ const AdminAnalytics: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const API_BASE = import.meta.env.VITE_API_URL || 'https://classroomtracker-backend.onrender.com';
+
   useEffect(() => {
     if (!user || user.role !== 'admin') {
       navigate('/hub');
@@ -19,7 +21,7 @@ const AdminAnalytics: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch('/api/admin/analytics', {
+        const res = await fetch(`${API_BASE}/api/admin/analytics`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
