@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { PlusCircle, LogOut, Users, DoorOpen, BookOpen, Trash2, LogOut as LeaveIcon, Settings as SettingsIcon } from 'lucide-react'
+import { PlusCircle, LogOut, Users, DoorOpen, BookOpen, Trash2, LogOut as LeaveIcon, Settings as SettingsIcon, Shield } from 'lucide-react'
 import { motion, AnimatePresence, easeInOut } from 'framer-motion'
 import { Plus, ArrowRight, Eye, EyeSlash } from 'react-bootstrap-icons'
 import Avataaars from 'avataaars'
+import { avatarStringToConfig } from './Settings'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
@@ -16,11 +17,6 @@ function generateClassroomCode(length = 6) {
     code += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   return code;
-}
-
-function avatarStringToConfig(str: string | undefined) {
-  if (!str) return undefined
-  try { return JSON.parse(str) } catch { return undefined }
 }
 
 interface Classroom {
@@ -222,28 +218,32 @@ return (
 
         {/* Header */}
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
-        <div className="d-flex align-items-center gap-3">
-            <div className="bg-warning rounded-circle d-flex align-items-center justify-content-center" style={{width: 56, height: 56, fontSize: 28, fontWeight: 700, color: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', background: '#fff'}}>
-              {user?.avatar && avatarStringToConfig(user.avatar) ? (
-                <Avataaars style={{width:48,height:48}} {...avatarStringToConfig(user.avatar)} />
-              ) : (
-                user?.nickname?.charAt(0).toUpperCase() || user?.name?.charAt(0).toUpperCase() || 'U'
-              )}
-            </div>
-            <div>
-              <h2 className="fw-bold mb-0" style={{fontSize: '2.1rem'}}>Welcome, {user?.nickname || user?.name}!</h2>
-              <div className="text-muted" style={{fontSize: '1.1rem'}}>{user?.email}</div>
-              {/* Admin Panel button for admin users */}
-              {user?.role === 'admin' && (
-                <button
-                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mt-3"
-                  onClick={() => navigate('/admin/analytics')}
-                >
-                  Admin Panel
-                </button>
-              )}
-            </div>
-          </div>
+            <div className="d-flex align-items-center gap-3">
+                <div className="bg-warning rounded-circle d-flex align-items-center justify-content-center" style={{width: 56, height: 56, fontSize: 28, fontWeight: 700, color: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', background: '#fff'}}>
+                  {user?.avatar && avatarStringToConfig(user.avatar) ? (
+                    <Avataaars style={{width:48,height:48}} {...avatarStringToConfig(user.avatar)} />
+                  ) : (
+                    user?.nickname?.charAt(0).toUpperCase() || user?.name?.charAt(0).toUpperCase() || 'U'
+                  )}
+                </div>
+                <div className="d-flex align-items-center gap-3">
+                  <div>
+                    <h2 className="fw-bold mb-0" style={{fontSize: '2.1rem'}}>Welcome, {user?.nickname || user?.name}!</h2>
+                    <div className="text-muted" style={{fontSize: '1.1rem'}}>{user?.email}</div>
+                  </div>
+                  {/* Admin Panel button for admin users */}
+                  {user?.role === 'admin' && (
+                    <button
+                      className="btn btn-outline-primary rounded-pill px-4 d-flex align-items-center gap-2 ms-2"
+                      style={{fontWeight: 600, borderWidth: 2}}
+                      onClick={() => navigate('/admin/analytics')}
+                      title="Admin Panel"
+                    >
+                      <Shield size={18} /> Admin Panel
+                    </button>
+                  )}
+                </div>
+              </div>
           <div className="d-flex gap-2 align-items-center">
           <button className="btn btn-outline-danger rounded-pill px-4 d-flex align-items-center gap-2" onClick={logout}>
             <LogOut size={18} /> Log out

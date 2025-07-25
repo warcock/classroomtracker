@@ -19,15 +19,10 @@ const io = new Server(server, {
   cors: { origin: "*" }
 })
 
-const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  message: { error: 'Too many requests, please try again later.' }
-});
+// Rate limiting disabled for development
 
 
 app.use(morgan('combined'));
-app.use('/api/', apiLimiter);
 
 const allowedOrigins = [
   "https://classroomtracker.onrender.com", // your frontend Render URL
@@ -563,10 +558,8 @@ app.get('/api/classrooms/:code', async (req, res) => {
 // Get classroom members
 app.get('/api/classrooms/:code/members', authenticateToken, async (req, res) => {
   try {
-    const classroom = await Classroom.findOne({ code: req.params.code }).populate('members', 'name nickname email role')
-    console.log('Classroom:', classroom)
+    const classroom = await Classroom.findOne({ code: req.params.code }).populate('members', 'name nickname email role avatar')
     if (!classroom) return res.status(404).json({ error: 'Classroom not found' })
-    console.log('Members:', classroom.members)
     res.json(classroom.members)
   } catch (error) {
     res.status(500).json({ error: error.message })
