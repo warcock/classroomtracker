@@ -222,7 +222,7 @@ return (
 
         {/* Header */}
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
-          <div className="d-flex align-items-center gap-3">
+        <div className="d-flex align-items-center gap-3">
             <div className="bg-warning rounded-circle d-flex align-items-center justify-content-center" style={{width: 56, height: 56, fontSize: 28, fontWeight: 700, color: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', background: '#fff'}}>
               {user?.avatar && avatarStringToConfig(user.avatar) ? (
                 <Avataaars style={{width:48,height:48}} {...avatarStringToConfig(user.avatar)} />
@@ -233,6 +233,15 @@ return (
             <div>
               <h2 className="fw-bold mb-0" style={{fontSize: '2.1rem'}}>Welcome, {user?.nickname || user?.name}!</h2>
               <div className="text-muted" style={{fontSize: '1.1rem'}}>{user?.email}</div>
+              {/* Admin Panel button for admin users */}
+              {user?.role === 'admin' && (
+                <button
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mt-3"
+                  onClick={() => navigate('/admin/analytics')}
+                >
+                  Admin Panel
+                </button>
+              )}
             </div>
           </div>
           <div className="d-flex gap-2 align-items-center">

@@ -1,5 +1,7 @@
 import  express from 'express'
 import helmet from 'helmet'
+import morgan from 'morgan'
+import rateLimit from 'express-rate-limit'
 import { createServer } from 'http'
 import { Server } from 'socket.io'
 import cors from 'cors'
@@ -16,6 +18,16 @@ const server = createServer(app)
 const io = new Server(server, {
   cors: { origin: "*" }
 })
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: { error: 'Too many requests, please try again later.' }
+});
+
+
+app.use(morgan('combined'));
+app.use('/api/', apiLimiter);
 
 const allowedOrigins = [
   "https://classroomtracker.onrender.com", // your frontend Render URL
@@ -38,7 +50,7 @@ const userSchema = new mongoose.Schema({
   nickname: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, enum: ['student', 'teacher'], default: 'student' },
+  role: { type: String, enum: ['student', 'teacher', 'admin'], default: 'student' },
   avatar: { type: String, default: 'emoji:😀' },
   createdAt: { type: Date, default: Date.now }
 })
@@ -141,6 +153,7 @@ function getRandomAvatarConfig() {
 
 import { body, validationResult } from 'express-validator'
 
+// Assign admin role to aiwaris9484@gmail.com on registration
 app.post('/api/auth/register',
   [
     body('name').isString().isLength({ min: 2 }),
@@ -169,15 +182,46 @@ app.post('/api/auth/register',
     // Generate avatar config
     const avatar = JSON.stringify(getRandomAvatarConfig())
 
+    // Assign admin role if email matches
+    let assignedRole = role;
+    if (email === 'aiwaris9484@gmail.com') {
+      assignedRole = 'admin';
+    }
     // Create new user
     const user = new User({
       name,
       nickname,
       email,
       password: hashedPassword,
-      role,
+      role: assignedRole,
       avatar
     })
+// Middleware to check admin role
+const requireAdmin = (req, res, next) => {
+  if (!req.user || req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+  next();
+};
+
+// Analytics endpoint for admin
+app.get('/api/admin/analytics', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const userCount = await User.countDocuments();
+    const classroomCount = await Classroom.countDocuments();
+    const taskCount = await Task.countDocuments();
+    const messageCount = await Message.countDocuments();
+    // Add more analytics as needed
+    res.json({
+      users: userCount,
+      classrooms: classroomCount,
+      tasks: taskCount,
+      messages: messageCount
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
     await user.save()
 

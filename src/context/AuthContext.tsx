@@ -9,7 +9,7 @@ interface User {
   name: string
   nickname: string
   email: string
-  role: 'student' | 'teacher'
+  role: 'student' | 'teacher' | 'admin'
   avatar?: string
   createdAt?: string
   __v?: number
