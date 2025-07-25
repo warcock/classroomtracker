@@ -1,4 +1,5 @@
 import  express from 'express'
+import helmet from 'helmet'
 import { createServer } from 'http'
 import { Server } from 'socket.io'
 import cors from 'cors'
@@ -24,6 +25,7 @@ app.use(cors({
   origin: allowedOrigins,
   credentials: true
 }));
+app.use(helmet());
 
 app.use(express.json())
 
@@ -137,7 +139,21 @@ function getRandomAvatarConfig() {
   return config;
 }
 
-app.post('/api/auth/register', async (req, res) => {
+import { body, validationResult } from 'express-validator'
+
+app.post('/api/auth/register',
+  [
+    body('name').isString().isLength({ min: 2 }),
+    body('nickname').isString().isLength({ min: 2 }),
+    body('email').isEmail(),
+    body('password').isLength({ min: 6 }),
+    body('role').optional().isIn(['student', 'teacher'])
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
   try {
     const { name, nickname, email, password, role } = req.body
 
@@ -189,7 +205,16 @@ app.post('/api/auth/register', async (req, res) => {
   }
 })
 
-app.post('/api/auth/login', async (req, res) => {
+app.post('/api/auth/login',
+  [
+    body('email').isEmail(),
+    body('password').isLength({ min: 6 })
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
   try {
     const { email, password } = req.body
 
@@ -492,7 +517,7 @@ app.get('/api/classrooms/:code', async (req, res) => {
 })
 
 // Get classroom members
-app.get('/api/classrooms/:code/members', async (req, res) => {
+app.get('/api/classrooms/:code/members', authenticateToken, async (req, res) => {
   try {
     const classroom = await Classroom.findOne({ code: req.params.code }).populate('members', 'name nickname email role')
     console.log('Classroom:', classroom)
@@ -504,7 +529,7 @@ app.get('/api/classrooms/:code/members', async (req, res) => {
   }
 })
 
-app.get('/api/classrooms/:code/messages', async (req, res) => {
+app.get('/api/classrooms/:code/messages', authenticateToken, async (req, res) => {
   try {
     const messages = await Message.find({ classroomId: req.params.code }).sort({ timestamp: 1 })
     res.json(messages)
