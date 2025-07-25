@@ -605,6 +605,11 @@ app.use((err, req, res, next) => {
   })
 })
 
+// Add this above the 404 handler
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Test route works!' });
+});
+
 // 404 handler for unmatched routes
 app.use('*', (req, res) => {
   res.status(404).json({ error: 'Route not found' })
