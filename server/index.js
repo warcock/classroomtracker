@@ -451,7 +451,7 @@ app.delete('/api/classrooms/:code', authenticateToken, async (req, res) => {
 })
 
 // Get tasks for a classroom (populate creator)
-app.get('/api/classrooms/:code/tasks', async (req, res) => {
+app.get('/api/classrooms/:code/tasks', authenticateToken, async (req, res) => {
   try {
     const tasks = await Task.find({ classroomId: req.params.code }).populate('createdBy', 'name nickname email')
     res.json(tasks)
@@ -493,7 +493,7 @@ app.delete('/api/tasks/:id', authenticateToken, async (req, res) => {
 })
 
 // Update a task (toggle completion or other fields)
-app.put('/api/tasks/:id', async (req, res) => {
+app.put('/api/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('createdBy', 'name nickname email')
     if (!task) return res.status(404).json({ error: 'Task not found' })
