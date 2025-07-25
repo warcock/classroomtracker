@@ -10,6 +10,7 @@ import { AuthProvider, useAuth } from './context/AuthContext'
 import AboutUs from './pages/AboutUs'
 import Contact from './pages/Contact'
 import PrivateRoute from './components/PrivateRoute'
+import NotFound from './pages/NotFound'
 import { AnimatePresence, motion, easeInOut } from 'framer-motion'
 
 const pageVariants = {
@@ -49,6 +50,7 @@ function AppRoutes() {
         <Route path="/about" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} style={{minHeight: '100vh'}}><AboutUs /></motion.div>} />
         <Route path="/contact" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} style={{minHeight: '100vh'}}><Contact /></motion.div>} />
         <Route path="/settings" element={<PrivateRoute><motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} style={{minHeight: '100vh'}}><Settings /></motion.div></PrivateRoute>} />
+        <Route path="*" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} style={{minHeight: '100vh'}}><NotFound /></motion.div>} />
       </Routes>
     </AnimatePresence>
   )
